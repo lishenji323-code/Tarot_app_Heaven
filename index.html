@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f7f1e7" />
+    <title>神谕之境</title>
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="phone-shell" aria-label="神谕之境">
+      <section class="app-screen active" id="screen-tarot" data-screen="tarot">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">每日塔罗</p>
+            <h1>神谕之境</h1>
+          </div>
+          <div class="goddess-badge" aria-hidden="true">
+            <span></span>
+          </div>
+        </header>
+
+        <section class="daily-altar">
+          <div class="pattern-band" aria-hidden="true"></div>
+          <div class="tarot-stage" id="tarotStage">
+            <article class="oracle-card tarot-card large" id="dailyTarotCard" aria-live="polite">
+              <div class="card-back">
+                <div class="sun-sigil"></div>
+                <p>今日牌面</p>
+              </div>
+              <div class="card-face">
+                <div class="card-visual" id="tarotVisual"></div>
+                <h2 id="tarotName">等待抽取</h2>
+                <p id="tarotEn">Tap to reveal</p>
+              </div>
+            </article>
+          </div>
+
+          <button class="primary-action" id="drawTarotBtn" type="button">
+            <span class="btn-icon draw-icon" aria-hidden="true"></span>
+            <span>每日一抽</span>
+          </button>
+        </section>
+
+        <section class="reading-panel hidden" id="tarotReading">
+          <p class="quote" id="tarotQuote"></p>
+          <p class="meaning" id="tarotMeaning"></p>
+          <div class="keyword-row" id="tarotKeywords"></div>
+        </section>
+      </section>
+
+      <section class="app-screen" id="screen-lenormand" data-screen="lenormand">
+        <header class="topbar compact">
+          <div>
+            <p class="eyebrow">雷诺曼解牌</p>
+            <h1>温柔牌阵</h1>
+          </div>
+        </header>
+
+        <section class="spread-controls">
+          <div class="segmented" role="tablist" aria-label="选择牌阵">
+            <button class="active" type="button" data-spread="3">3 张</button>
+            <button type="button" data-spread="5">5 张</button>
+          </div>
+          <button class="ghost-action" id="shuffleBtn" type="button">
+            <span class="btn-icon shuffle-icon" aria-hidden="true"></span>
+            <span>洗牌</span>
+          </button>
+        </section>
+
+        <section class="deck-zone" aria-live="polite">
+          <div class="deck-stack" id="deckStack" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="spread-grid" id="spreadGrid"></div>
+        </section>
+
+        <section class="reading-panel lenormand-result hidden" id="lenormandResult">
+          <div class="result-title">
+            <p class="eyebrow">本次讯息</p>
+            <h2 id="spreadTitle">过去、现在、未来</h2>
+          </div>
+          <p class="meaning" id="aiReading"></p>
+          <div class="rating-block">
+            <p>这次解读</p>
+            <div class="stars" id="ratingStars" aria-label="评分"></div>
+            <span id="ratingValue">未评分</span>
+          </div>
+        </section>
+      </section>
+
+      <section class="app-screen meditation-screen" id="screen-meditation" data-screen="meditation">
+        <div class="meditation-bg" id="meditationBg" aria-hidden="true">
+          <span class="breath-orb"></span>
+          <span class="wave wave-a"></span>
+          <span class="wave wave-b"></span>
+          <span class="particle p1"></span>
+          <span class="particle p2"></span>
+          <span class="particle p3"></span>
+        </div>
+
+        <header class="topbar compact">
+          <div>
+            <p class="eyebrow" id="timeTheme">动态冥想</p>
+            <h1>五分钟归心</h1>
+          </div>
+        </header>
+
+        <section class="timer-stage">
+          <div class="timer-ring" id="timerRing">
+            <div>
+              <strong id="timerText">05:00</strong>
+              <span id="breathCue">吸气</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="meditation-controls">
+          <button class="primary-action" id="meditationToggle" type="button">
+            <span class="btn-icon play-icon" aria-hidden="true"></span>
+            <span>开始</span>
+          </button>
+          <label class="volume-control">
+            <span class="btn-icon volume-icon" aria-hidden="true"></span>
+            <input id="volumeRange" type="range" min="0" max="100" value="56" />
+          </label>
+        </section>
+      </section>
+
+      <nav class="bottom-nav" aria-label="主导航">
+        <button class="active" type="button" data-target="tarot">
+          <span class="nav-icon tarot-icon" aria-hidden="true"></span>
+          <span>塔罗</span>
+        </button>
+        <button type="button" data-target="lenormand">
+          <span class="nav-icon cards-icon" aria-hidden="true"></span>
+          <span>解牌</span>
+        </button>
+        <button type="button" data-target="meditation">
+          <span class="nav-icon meditate-icon" aria-hidden="true"></span>
+          <span>冥想</span>
+        </button>
+      </nav>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
