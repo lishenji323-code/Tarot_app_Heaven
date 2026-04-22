@@ -257,9 +257,11 @@ function cardInlineStyle(card) {
   return `--art-a:${card.colors[0]};--art-b:${card.colors[1]};${image}`;
 }
 
-function deckStackHtml() {
-  return `<div class="deck-stack ritual-deck" aria-hidden="true">
+function deckStackHtml(state) {
+  return `<div class="deck-stack ritual-deck" data-role="circleDeck">
     <span></span><span></span><span></span><span></span><span></span>
+    <canvas width="180" height="238"></canvas>
+    <em>${state.circled ? "圆圈完成" : "在牌上画圈"}</em>
   </div>`;
 }
 
@@ -281,9 +283,9 @@ function renderRitual(container, state) {
   const selectedCount = state.selected.length;
   const needCount = state.pickCount;
   const status =
-    !state.circled ? "在感应区画一个圆圈" :
+    !state.circled ? "在牌堆上画一个圆圈" :
     !state.shuffled ? "圆圈已完成，请点击洗牌" :
-    !state.cut ? "向左滑动牌堆完成切牌" :
+    !state.cut ? "点击切牌，让牌堆一分为二" :
     selectedCount < needCount ? `请选择 ${needCount} 张牌，已选 ${selectedCount} 张` :
     "牌阵已经完成";
 
@@ -293,20 +295,16 @@ function renderRitual(container, state) {
       <p class="eyebrow">${state.label}</p>
       <h2>${status}</h2>
     </div>
-    <div class="ritual-board ${state.shuffled ? "is-shuffled" : ""} ${state.cut ? "is-cut" : ""}">
-      ${deckStackHtml()}
-      <div class="circle-pad ${state.circled ? "complete" : ""}" data-role="circlePad">
-        <canvas width="220" height="160"></canvas>
-        <span>${state.circled ? "圆圈完成" : "在这里画圈"}</span>
-      </div>
+    <div class="ritual-board ${state.circled ? "is-circled" : ""} ${state.shuffled ? "is-shuffled" : ""} ${state.cut ? "is-cut" : ""}">
+      ${deckStackHtml(state)}
       <button class="ghost-action ritual-shuffle" type="button" data-role="shuffle" ${state.circled && !state.shuffled ? "" : "disabled"}>
         <span class="btn-icon shuffle-icon" aria-hidden="true"></span>
         <span>洗牌</span>
       </button>
-    </div>
-    <div class="cut-zone ${state.shuffled && !state.cut ? "ready" : ""}" data-role="cutZone">
-      <span></span>
-      <p>${state.shuffled ? "按住牌堆向左滑动切牌" : "完成洗牌后解锁切牌"}</p>
+      <button class="ghost-action ritual-cut ${state.shuffled && !state.cut ? "ready" : ""}" type="button" data-role="cut" ${state.shuffled && !state.cut ? "" : "disabled"}>
+        <span class="btn-icon cut-icon" aria-hidden="true"></span>
+        <span>切牌</span>
+      </button>
     </div>
     <div class="fan-zone ${state.cut ? "show" : ""}">
       ${state.cut ? renderFan(state) : ""}
@@ -333,8 +331,8 @@ function renderFan(state) {
 
 function bindRitual(container, state) {
   const board = container.querySelector(".ritual-board");
-  const circlePad = container.querySelector("[data-role='circlePad']");
-  const canvas = circlePad.querySelector("canvas");
+  const circleDeck = container.querySelector("[data-role='circleDeck']");
+  const canvas = circleDeck.querySelector("canvas");
   const ctx = canvas.getContext("2d");
   let drawing = false;
   let points = [];
@@ -349,9 +347,11 @@ function bindRitual(container, state) {
   }
 
   function drawLine(point) {
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 6;
     ctx.lineCap = "round";
-    ctx.strokeStyle = "#8f6d4f";
+    ctx.strokeStyle = "rgba(255, 249, 237, 0.92)";
+    ctx.shadowColor = "rgba(200, 155, 75, 0.6)";
+    ctx.shadowBlur = 8;
     if (points.length === 1) {
       ctx.beginPath();
       ctx.moveTo(point.x, point.y);
@@ -362,19 +362,19 @@ function bindRitual(container, state) {
   }
 
   function testCircle() {
-    if (points.length < 18) return false;
+    if (points.length < 12) return false;
     const xs = points.map((point) => point.x);
     const ys = points.map((point) => point.y);
     const width = Math.max(...xs) - Math.min(...xs);
     const height = Math.max(...ys) - Math.min(...ys);
     const first = points[0];
     const last = points[points.length - 1];
-    const close = Math.hypot(first.x - last.x, first.y - last.y) < 58;
+    const close = Math.hypot(first.x - last.x, first.y - last.y) < 82;
     const path = points.slice(1).reduce((sum, point, index) => sum + Math.hypot(point.x - points[index].x, point.y - points[index].y), 0);
-    return close && width > 80 && height > 60 && path > 280;
+    return close && width > 52 && height > 52 && path > 175;
   }
 
-  circlePad.addEventListener("pointerdown", (event) => {
+  circleDeck.addEventListener("pointerdown", (event) => {
     if (state.circled) return;
     drawing = true;
     points = [];
@@ -382,10 +382,10 @@ function bindRitual(container, state) {
     const point = pointFromEvent(event);
     points.push(point);
     drawLine(point);
-    circlePad.setPointerCapture(event.pointerId);
+    circleDeck.setPointerCapture(event.pointerId);
   });
 
-  circlePad.addEventListener("pointermove", (event) => {
+  circleDeck.addEventListener("pointermove", (event) => {
     if (!drawing || state.circled) return;
     event.preventDefault();
     const point = pointFromEvent(event);
@@ -393,7 +393,7 @@ function bindRitual(container, state) {
     drawLine(point);
   });
 
-  circlePad.addEventListener("pointerup", () => {
+  circleDeck.addEventListener("pointerup", () => {
     if (!drawing || state.circled) return;
     drawing = false;
     if (testCircle()) {
@@ -412,22 +412,13 @@ function bindRitual(container, state) {
     window.setTimeout(() => renderRitual(container, state), 760);
   });
 
-  const cutZone = container.querySelector("[data-role='cutZone']");
-  cutZone.addEventListener("pointerdown", (event) => {
+  container.querySelector("[data-role='cut']").addEventListener("click", () => {
     if (!state.shuffled || state.cut) return;
-    state.startX = event.clientX;
-    cutZone.setPointerCapture(event.pointerId);
-  });
-
-  cutZone.addEventListener("pointerup", (event) => {
-    if (!state.shuffled || state.cut) return;
-    if (event.clientX - state.startX < -52) {
-      const half = Math.floor(state.order.length / 2);
-      state.order = [...state.order.slice(half), ...state.order.slice(0, half)];
-      state.cut = true;
-      cutZone.classList.add("cutting");
-      window.setTimeout(() => renderRitual(container, state), 560);
-    }
+    const half = Math.floor(state.order.length / 2);
+    state.order = [...state.order.slice(half), ...state.order.slice(0, half)];
+    state.cut = true;
+    board.classList.add("cutting");
+    window.setTimeout(() => renderRitual(container, state), 560);
   });
 
   container.querySelectorAll(".fan-card").forEach((button) => {
@@ -485,16 +476,10 @@ function startDailyTarot() {
     return;
   }
   $("#tarotReading").classList.add("hidden");
-  createRitual($("#tarotRitual"), {
-    type: "tarot",
-    label: "每日塔罗仪式",
-    deck: tarotCards,
-    pickCount: 1,
-    onComplete: ([card]) => {
-      const reversed = seededNumber(`${todayKey()}-${card.id}`) % 2 === 1;
-      revealDailyTarot(card, reversed);
-    }
-  });
+  const order = shuffleDeck(tarotCards, `daily-${todayKey()}`);
+  const card = order[0];
+  const reversed = seededNumber(`${todayKey()}-${card.id}`) % 2 === 1;
+  revealDailyTarot(card, reversed);
 }
 
 function renderSpread(cards) {
@@ -634,7 +619,7 @@ function bindEvents() {
     button.addEventListener("click", () => {
       currentSpread = Number(button.dataset.spread);
       $$(".segmented button").forEach((item) => item.classList.toggle("active", item === button));
-      startLenormand();
+      if (!$("#lenormandRitual").classList.contains("hidden")) startLenormand();
     });
   });
 
@@ -653,7 +638,6 @@ function init() {
   paintStars();
   const dailyCard = readDailyTarot();
   if (dailyCard) revealDailyTarot(dailyCard.card, dailyCard.reversed, false);
-  startLenormand();
   console.info(`Tarot cards: ${tarotCards.length}; Lenormand cards: ${lenormandCards.length}`);
 }
 
