@@ -39,12 +39,15 @@
 
           <button class="primary-action" id="drawTarotBtn" type="button">
             <span class="btn-icon draw-icon" aria-hidden="true"></span>
-            <span>每日一抽</span>
+            <span>开始今日仪式</span>
           </button>
         </section>
 
+        <section class="ritual-panel hidden" id="tarotRitual" aria-live="polite"></section>
+
         <section class="reading-panel hidden" id="tarotReading">
           <p class="quote" id="tarotQuote"></p>
+          <p class="source" id="tarotSource"></p>
           <p class="meaning" id="tarotMeaning"></p>
           <div class="keyword-row" id="tarotKeywords"></div>
         </section>
@@ -63,16 +66,15 @@
             <button class="active" type="button" data-spread="3">3 张</button>
             <button type="button" data-spread="5">5 张</button>
           </div>
-          <button class="ghost-action" id="shuffleBtn" type="button">
-            <span class="btn-icon shuffle-icon" aria-hidden="true"></span>
-            <span>洗牌</span>
+          <button class="ghost-action" id="startLenormandBtn" type="button">
+            <span class="btn-icon draw-icon" aria-hidden="true"></span>
+            <span>开始</span>
           </button>
         </section>
 
+        <section class="ritual-panel" id="lenormandRitual" aria-live="polite"></section>
+
         <section class="deck-zone" aria-live="polite">
-          <div class="deck-stack" id="deckStack" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span>
-          </div>
           <div class="spread-grid" id="spreadGrid"></div>
         </section>
 

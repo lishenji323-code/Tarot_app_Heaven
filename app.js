@@ -1,115 +1,95 @@
-const tarotCards = [
-  {
-    name: "愚者",
-    en: "The Fool",
-    symbol: "0",
-    colors: ["#d8b16f", "#77a79d"],
-    quote: "风从远处来，也把新的路带到脚边。",
-    meaning: "今天适合把心放轻一点。你不必马上知道所有答案，先允许自己迈出温和的一步，路会在行动里变得清楚。",
-    keywords: ["开始", "信任", "流动"]
-  },
-  {
-    name: "女祭司",
-    en: "The High Priestess",
-    symbol: "II",
-    colors: ["#6b5a87", "#2f625f"],
-    quote: "沉默并不空白，它常常藏着最准确的潮汐。",
-    meaning: "你正在靠近一个更细腻的答案。少一点解释，多一点感受，直觉会替你筛掉过于喧闹的部分。",
-    keywords: ["直觉", "静观", "秘密"]
-  },
-  {
-    name: "皇后",
-    en: "The Empress",
-    symbol: "III",
-    colors: ["#c47472", "#6aa37e"],
-    quote: "万物在被照料时，都会慢慢显出自己的光。",
-    meaning: "今天把注意力放回滋养本身。照顾身体、空间和情绪，也是在替未来的果实松土。",
-    keywords: ["丰盛", "滋养", "创造"]
-  },
-  {
-    name: "恋人",
-    en: "The Lovers",
-    symbol: "VI",
-    colors: ["#b8833e", "#c47472"],
-    quote: "真正的选择，往往会让心更靠近诚实。",
-    meaning: "关系与决定都在提醒你回到内心的价值。无需讨好所有方向，只要听见你真正愿意守护什么。",
-    keywords: ["选择", "连接", "诚实"]
-  },
-  {
-    name: "战车",
-    en: "The Chariot",
-    symbol: "VII",
-    colors: ["#315f5c", "#d1a24e"],
-    quote: "当目光安定，前路便不再只是风。",
-    meaning: "能量正在聚拢。把分散的念头收回来，给今天一个明确的重点，你会比想象中更有推进力。",
-    keywords: ["推进", "掌控", "方向"]
-  },
-  {
-    name: "力量",
-    en: "Strength",
-    symbol: "VIII",
-    colors: ["#d49c67", "#8a627f"],
-    quote: "温柔不是退让，而是知道如何不伤害自己。",
-    meaning: "你不需要用紧绷证明坚强。缓慢、耐心和自我安抚，会让你更稳地穿过眼前的事。",
-    keywords: ["勇气", "耐心", "柔软"]
-  },
-  {
-    name: "隐士",
-    en: "The Hermit",
-    symbol: "IX",
-    colors: ["#596b7c", "#c89b4b"],
-    quote: "灯不必照亮全部，只要照见下一步。",
-    meaning: "今天适合减少外界噪音。独处并非疏离，而是让你重新听清自己微弱但真实的声音。",
-    keywords: ["独处", "洞察", "内省"]
-  },
-  {
-    name: "命运之轮",
-    en: "Wheel of Fortune",
-    symbol: "X",
-    colors: ["#7f6a9d", "#4f8b85"],
-    quote: "变化来临时，旧答案会松开手。",
-    meaning: "某个循环正在转动。与其执着控制，不如观察机会如何浮现，并在恰当处轻轻推一把。",
-    keywords: ["转机", "循环", "顺势"]
-  },
-  {
-    name: "星星",
-    en: "The Star",
-    symbol: "XVII",
-    colors: ["#5e86a6", "#d8b16f"],
-    quote: "夜色越深，微光越懂得靠近。",
-    meaning: "这是修复与希望的一天。把期待放得柔软些，给自己补水、休息，也给梦想留一扇窗。",
-    keywords: ["希望", "疗愈", "清澈"]
-  },
-  {
-    name: "月亮",
-    en: "The Moon",
-    symbol: "XVIII",
-    colors: ["#2f4665", "#8b7899"],
-    quote: "迷雾不是阻拦，它只是让你慢一点走。",
-    meaning: "今天不要急着下结论。情绪可能放大细节，先安顿身体，再辨认哪些是真相，哪些只是担心。",
-    keywords: ["梦境", "情绪", "辨认"]
-  },
-  {
-    name: "太阳",
-    en: "The Sun",
-    symbol: "XIX",
-    colors: ["#e0aa48", "#6aa37e"],
-    quote: "明亮的事物，总会把影子带到可以被拥抱的地方。",
-    meaning: "能见度正在提高。适合表达、协作和完成一件让你开心的小事，喜悦会把信心带回来。",
-    keywords: ["清晰", "喜悦", "成长"]
-  },
-  {
-    name: "世界",
-    en: "The World",
-    symbol: "XXI",
-    colors: ["#4f8b85", "#8f6d4f"],
-    quote: "抵达不是终点，而是终于看见自己走过的圆。",
-    meaning: "某件事进入整合阶段。回头看看你已经完成的部分，认可它，然后带着更完整的自己继续向前。",
-    keywords: ["完成", "整合", "开阔"]
-  }
+const palette = [
+  ["#d8b16f", "#77a79d"],
+  ["#6b5a87", "#2f625f"],
+  ["#c47472", "#6aa37e"],
+  ["#b8833e", "#596b7c"],
+  ["#315f5c", "#d1a24e"],
+  ["#d49c67", "#8a627f"],
+  ["#596b7c", "#c89b4b"],
+  ["#7f6a9d", "#4f8b85"],
+  ["#5e86a6", "#d8b16f"],
+  ["#2f4665", "#8b7899"]
 ];
 
-const lenormandCards = [
+const literatureRefs = [
+  ["奥维德", "《变形记》", "万物改变形貌，却仍保存隐秘的灵魂。"],
+  ["但丁", "《神曲》", "在迷途深处，一束微光会教人重新辨认方向。"],
+  ["莎士比亚", "《暴风雨》", "风暴过去后，心会听见岛屿上的新音乐。"],
+  ["歌德", "《浮士德》", "愿望若被看清，便不再只是诱惑。"],
+  ["玛丽·雪莱", "《弗兰肯斯坦》", "创造之火需要温柔，也需要承担。"],
+  ["简·奥斯汀", "《劝导》", "迟来的明白，仍能抵达真诚的岸边。"],
+  ["艾米莉·勃朗特", "《呼啸山庄》", "旷野知道，人心有时比天气更辽阔。"],
+  ["夏洛蒂·勃朗特", "《简·爱》", "独立的心，也渴望被平等地看见。"],
+  ["狄更斯", "《远大前程》", "命运的门常在朴素的善意里打开。"],
+  ["梅尔维尔", "《白鲸》", "深海不回答问题，却映出追问者的轮廓。"],
+  ["托尔斯泰", "《安娜·卡列尼娜》", "每一颗心都有自己的秩序与风雪。"],
+  ["陀思妥耶夫斯基", "《卡拉马佐夫兄弟》", "黑暗越深，人越需要替彼此守住烛火。"],
+  ["雨果", "《悲惨世界》", "怜悯落在贫瘠之处，也能长出春天。"],
+  ["塞万提斯", "《堂吉诃德》", "理想有时像旧盔甲，仍替灵魂挡风。"],
+  ["乔治·艾略特", "《米德尔马契》", "细小的善念，会在无人处改变水流。"],
+  ["荷马", "《奥德赛》", "归途漫长，星光仍认识归人。"],
+  ["弗吉尼亚·伍尔夫", "《到灯塔去》", "潮声退去时，心中的房间忽然明亮。"],
+  ["普鲁斯特", "《追忆似水年华》", "记忆像香气，轻轻一碰便打开旧日之门。"],
+  ["赫尔曼·黑塞", "《悉达多》", "河流从不催促，却懂得所有抵达。"],
+  ["纪伯伦", "《先知》", "爱并不占有，它只让生命更宽。"],
+  ["泰戈尔", "《飞鸟集》", "天空没有留下痕迹，飞翔却已经发生。"],
+  ["波德莱尔", "《恶之花》", "忧郁的花也会向光展开。"],
+  ["里尔克", "《给青年诗人的信》", "请慢慢活进那些暂时没有答案的问题。"],
+  ["王尔德", "《道林·格雷的画像》", "美若没有灵魂照看，也会成为镜中的迷宫。"],
+  ["曹雪芹", "《红楼梦》", "繁华如梦，真心却在细微处显影。"],
+  ["施耐庵", "《水浒传》", "风尘之中，义气有时就是人的灯。"]
+];
+
+const majorArcana = [
+  ["愚者", "The Fool", "0", "开始", "信任", "冒险", "轻装出发，允许未知带路。", "犹豫和散漫让脚步失焦，先把边界找回来。"],
+  ["魔术师", "The Magician", "I", "显化", "技巧", "意志", "资源已经在手边，关键是把念头落成动作。", "意志分散或表达失真，先校准真正想创造的事。"],
+  ["女祭司", "The High Priestess", "II", "直觉", "静观", "秘密", "答案藏在安静里，少说一点会听见更多。", "过度封闭让直觉变成猜疑，需要温柔地求证。"],
+  ["皇后", "The Empress", "III", "丰盛", "滋养", "创造", "照料自己，也是在照料正在成形的未来。", "给予过多会耗空自己，丰盛需要边界陪伴。"],
+  ["皇帝", "The Emperor", "IV", "秩序", "责任", "结构", "建立规则会让能量有地方安放。", "控制欲可能遮住关怀，试着让秩序更有弹性。"],
+  ["教皇", "The Hierophant", "V", "传统", "学习", "信念", "旧智慧正在提供一条可借力的路径。", "外在标准不必替你决定内心的信仰。"],
+  ["恋人", "The Lovers", "VI", "选择", "连接", "诚实", "真正的选择会让你更靠近自己。", "关系里的摇摆提醒你重新辨认价值排序。"],
+  ["战车", "The Chariot", "VII", "方向", "推进", "掌控", "把分散的力量收束，路会更清楚。", "急于前进可能带来拉扯，先确认方向一致。"],
+  ["力量", "Strength", "VIII", "勇气", "耐心", "柔软", "温柔不是退让，而是稳定地陪伴内在野性。", "强撑会消耗勇气，真正的力量允许休息。"],
+  ["隐者", "The Hermit", "IX", "独处", "洞察", "内省", "灯不必照亮全部，只要照见下一步。", "孤立并非清醒，适时让可信的人靠近。"],
+  ["命运之轮", "Wheel of Fortune", "X", "转机", "循环", "顺势", "变化正在转动，旧答案开始松手。", "抗拒变化会放大无力感，先找回能选择的一小块。"],
+  ["正义", "Justice", "XI", "平衡", "真相", "因果", "清晰地看见事实，就是修复的开始。", "苛责或偏见会让天平失准，给事实多一点空间。"],
+  ["倒吊人", "The Hanged Man", "XII", "暂停", "换位", "臣服", "停下来不是失败，而是换一个角度理解命运。", "拖延若披着等待的外衣，需要被轻轻识破。"],
+  ["死神", "Death", "XIII", "结束", "蜕变", "释放", "落叶不是消失，是把生命交还给下一个季节。", "害怕结束会困住新生，先放下一件不再适合的事。"],
+  ["节制", "Temperance", "XIV", "调和", "疗愈", "流动", "两股水慢慢相融，心也会找到温度。", "失衡来自过度补偿，回到中间那条安静的路。"],
+  ["恶魔", "The Devil", "XV", "束缚", "欲望", "觉察", "看见锁链的那一刻，自由已经开始。", "否认欲望会让它更暗，诚实面对才有选择。"],
+  ["高塔", "The Tower", "XVI", "破局", "震动", "重建", "坍塌的部分，往往早已不再承重。", "余震让人不安，但新的结构正在等待被建立。"],
+  ["星星", "The Star", "XVII", "希望", "疗愈", "清澈", "夜色越深，微光越懂得靠近。", "希望暂时微弱时，先照顾身体里的水与呼吸。"],
+  ["月亮", "The Moon", "XVIII", "梦境", "情绪", "辨认", "迷雾不是阻拦，它只是让你慢一点走。", "不安会投下影子，等潮水退一点再下结论。"],
+  ["太阳", "The Sun", "XIX", "喜悦", "清晰", "成长", "明亮的事物会把信心带回身体。", "过度乐观可能忽略细节，让快乐也保持清醒。"],
+  ["审判", "Judgement", "XX", "召唤", "醒悟", "更新", "旧我听见钟声，新的名字正在出现。", "害怕回应召唤时，先原谅过去的迟疑。"],
+  ["世界", "The World", "XXI", "完成", "整合", "开阔", "抵达不是终点，而是看见自己走过的圆。", "尚未收尾的细节需要被温柔整理，再继续向前。"]
+];
+
+const minorSuits = [
+  ["权杖", "Wands", "火", "行动", "热情", "灵感"],
+  ["圣杯", "Cups", "水", "情感", "关系", "接纳"],
+  ["宝剑", "Swords", "风", "思考", "真相", "决断"],
+  ["金币", "Pentacles", "土", "现实", "身体", "资源"]
+];
+
+const minorRanks = [
+  ["王牌", "Ace", "萌芽", "一枚新的种子正在发光。", "种子需要土壤，而不是焦急的凝视。"],
+  ["二", "Two", "选择", "两个方向都在邀请你辨认重心。", "摇摆过久会消耗清明，先选一小步。"],
+  ["三", "Three", "协作", "有人与你同频，作品开始成形。", "合作若失衡，需要重新分配重量。"],
+  ["四", "Four", "稳定", "稳固的空间让心有处安放。", "过度守成可能让流动停滞。"],
+  ["五", "Five", "摩擦", "不适感正在指出需要调整的位置。", "别把暂时的困难误认为全部命运。"],
+  ["六", "Six", "回馈", "给予与接受正在寻找更自然的比例。", "旧情或旧模式可能让你回头太久。"],
+  ["七", "Seven", "评估", "耐心观察，果实还在枝头成熟。", "怀疑太多会削弱已经种下的努力。"],
+  ["八", "Eight", "练习", "重复并不无聊，它正在磨亮手艺。", "忙碌若没有方向，会把人带离初心。"],
+  ["九", "Nine", "成果", "你已经靠近一个值得珍惜的阶段。", "独享成果时，也别忘了补充真实连接。"],
+  ["十", "Ten", "圆满", "一段经验抵达重量与收束。", "负担若过满，需要把不属于你的放下。"],
+  ["侍从", "Page", "学习", "新消息带着年轻而敏锐的光。", "稚嫩不是错误，但需要更多倾听。"],
+  ["骑士", "Knight", "推进", "能量开始移动，方向感变得重要。", "冲得太快时，先看清脚下的路。"],
+  ["王后", "Queen", "承载", "成熟的感受力让周围变得安定。", "照顾别人之前，也请回到自己的杯中。"],
+  ["国王", "King", "掌握", "你可以稳稳管理这一份力量。", "权威若少了柔软，容易变成距离。"]
+];
+
+const lenormandDefinitions = [
   ["骑士", "Rider", "♞", "消息与抵达"],
   ["三叶草", "Clover", "♣", "轻盈的好运"],
   ["船", "Ship", "≈", "远方与移动"],
@@ -146,57 +126,103 @@ const lenormandCards = [
   ["鱼", "Fish", "≋", "流通与资源"],
   ["锚", "Anchor", "⌖", "稳定与停泊"],
   ["十字架", "Cross", "✚", "责任与信念"]
-].map((card, index) => ({
-  id: index + 1,
-  name: card[0],
-  en: card[1],
-  symbol: card[2],
-  meaning: card[3],
-  colors: [
-    ["#c47472", "#4f8b85"],
-    ["#b8833e", "#596b7c"],
-    ["#6b5a87", "#d8b16f"],
-    ["#315f5c", "#c9786c"],
-    ["#5e86a6", "#8f6d4f"]
-  ][index % 5]
-}));
+];
 
 const spreadPositions = {
   3: ["过去", "现在", "未来"],
   5: ["现实", "潜意识", "阻碍", "目标", "结果"]
 };
 
+const dailyStorageKey = "oracle-daily-tarot-v2";
 let currentSpread = 3;
 let currentRating = 0;
 let meditationSeconds = 300;
 let meditationTimer = null;
-const dailyStorageKey = "oracle-daily-tarot";
+let activeRituals = {};
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
 
-function pickRandom(items, count = 1) {
-  const pool = [...items];
-  const result = [];
-  while (result.length < count && pool.length) {
-    const index = Math.floor(Math.random() * pool.length);
-    result.push(pool.splice(index, 1)[0]);
+function slugify(value) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+function imagePrompt(deckType, cardName, cardEn, symbol) {
+  const shared =
+    "vertical collectible occult card, mysterious exotic classical luxury, intricate botanical vines, curled leaves, floral ornament, antique symmetrical border, ivory beige cream old paper matte texture, pale sand gold, sage green, olive green, muted rose, bronze accents, Persian Moroccan North African and old European decorative arts fusion, refined vintage print, clear central subject, no cartoon, no modern minimalism, no cyberpunk, no plastic, no watermark, no readable text";
+  if (deckType === "lenormand") {
+    return `Original Lenormand deck card: ${cardName} / ${cardEn}, central symbol must be ${symbol}, ${shared}.`;
   }
-  return count === 1 ? result[0] : result;
+  return `Original Tarot deck card: ${cardName} / ${cardEn}, central tarot theme must be unmistakable, ${shared}.`;
 }
 
-function seededDailyIndex() {
-  const today = new Date();
-  const key = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-  let hash = 0;
-  for (const char of key) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
-  return hash % tarotCards.length;
+function buildTarotDeck() {
+  const majors = majorArcana.map((card, index) => {
+    const ref = literatureRefs[index % literatureRefs.length];
+    return {
+      id: `tarot-major-${index}`,
+      deck: "tarot",
+      name: card[0],
+      en: card[1],
+      symbol: card[2],
+      colors: palette[index % palette.length],
+      keywords: [card[3], card[4], card[5]],
+      upright: card[6],
+      reversed: card[7],
+      quote: ref[2],
+      author: ref[0],
+      book: ref[1],
+      imagePrompt: imagePrompt("tarot", card[0], card[1], card[2])
+    };
+  });
+
+  const minors = minorSuits.flatMap((suit, suitIndex) =>
+    minorRanks.map((rank, rankIndex) => {
+      const index = 22 + suitIndex * minorRanks.length + rankIndex;
+      const ref = literatureRefs[index % literatureRefs.length];
+      const zh = `${suit[0]}${rank[0]}`;
+      const en = `${rank[1]} of ${suit[1]}`;
+      return {
+        id: `tarot-${slugify(suit[1])}-${rankIndex + 1}`,
+        deck: "tarot",
+        name: zh,
+        en,
+        symbol: suit[2],
+        colors: palette[index % palette.length],
+        keywords: [suit[3], suit[4], rank[2]],
+        upright: `${suit[0]}的${rank[0]}把「${rank[2]}」带入${suit[3]}领域。${rank[3]}今天请把注意力放在${suit[5]}，让行动更贴近真实需要。`,
+        reversed: `${suit[0]}的${rank[0]}逆位让${rank[2]}暂时变得不稳定。${rank[4]}给自己一点缓冲，再决定下一步。`,
+        quote: ref[2],
+        author: ref[0],
+        book: ref[1],
+        imagePrompt: imagePrompt("tarot", zh, en, suit[2])
+      };
+    })
+  );
+
+  return [...majors, ...minors];
 }
 
-function setCardArt(element, card) {
-  element.dataset.symbol = card.symbol;
-  element.style.setProperty("--art-a", card.colors[0]);
-  element.style.setProperty("--art-b", card.colors[1]);
+const tarotCards = buildTarotDeck();
+
+const lenormandCards = lenormandDefinitions.map((card, index) => ({
+  id: `lenormand-${index + 1}`,
+  deck: "lenormand",
+  name: card[0],
+  en: card[1],
+  symbol: card[2],
+  meaning: card[3],
+  colors: palette[index % palette.length],
+  imagePrompt: imagePrompt("lenormand", card[0], card[1], card[2])
+}));
+
+function seededNumber(seed) {
+  let hash = 2166136261;
+  for (const char of seed) {
+    hash ^= char.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
 }
 
 function todayKey() {
@@ -204,16 +230,242 @@ function todayKey() {
   return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 }
 
-function revealDailyTarot(card, persist = true) {
+function shuffleDeck(deck, seed = `${Date.now()}-${Math.random()}`) {
+  const result = [...deck];
+  let random = seededNumber(seed);
+  for (let i = result.length - 1; i > 0; i -= 1) {
+    random = (Math.imul(random, 1664525) + 1013904223) >>> 0;
+    const j = random % (i + 1);
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+function pickRandom(items, count = 1) {
+  return shuffleDeck(items).slice(0, count);
+}
+
+function setCardArt(element, card) {
+  element.dataset.symbol = card.symbol;
+  element.style.setProperty("--art-a", card.colors[0]);
+  element.style.setProperty("--art-b", card.colors[1]);
+  element.style.backgroundImage = card.imageUrl ? `url("${card.imageUrl}")` : "";
+}
+
+function cardInlineStyle(card) {
+  const image = card.imageUrl ? `background-image:url('${card.imageUrl}');background-size:cover;background-position:center;` : "";
+  return `--art-a:${card.colors[0]};--art-b:${card.colors[1]};${image}`;
+}
+
+function deckStackHtml() {
+  return `<div class="deck-stack ritual-deck" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>`;
+}
+
+function createRitual(container, options) {
+  const state = {
+    ...options,
+    order: shuffleDeck(options.deck, `${options.type}-${todayKey()}-${Date.now()}`),
+    selected: [],
+    circled: false,
+    shuffled: false,
+    cut: false,
+    startX: 0
+  };
+  activeRituals[options.type] = state;
+  renderRitual(container, state);
+}
+
+function renderRitual(container, state) {
+  const selectedCount = state.selected.length;
+  const needCount = state.pickCount;
+  const status =
+    !state.circled ? "在感应区画一个圆圈" :
+    !state.shuffled ? "圆圈已完成，请点击洗牌" :
+    !state.cut ? "向左滑动牌堆完成切牌" :
+    selectedCount < needCount ? `请选择 ${needCount} 张牌，已选 ${selectedCount} 张` :
+    "牌阵已经完成";
+
+  container.classList.remove("hidden");
+  container.innerHTML = `
+    <div class="ritual-status">
+      <p class="eyebrow">${state.label}</p>
+      <h2>${status}</h2>
+    </div>
+    <div class="ritual-board ${state.shuffled ? "is-shuffled" : ""} ${state.cut ? "is-cut" : ""}">
+      ${deckStackHtml()}
+      <div class="circle-pad ${state.circled ? "complete" : ""}" data-role="circlePad">
+        <canvas width="220" height="160"></canvas>
+        <span>${state.circled ? "圆圈完成" : "在这里画圈"}</span>
+      </div>
+      <button class="ghost-action ritual-shuffle" type="button" data-role="shuffle" ${state.circled && !state.shuffled ? "" : "disabled"}>
+        <span class="btn-icon shuffle-icon" aria-hidden="true"></span>
+        <span>洗牌</span>
+      </button>
+    </div>
+    <div class="cut-zone ${state.shuffled && !state.cut ? "ready" : ""}" data-role="cutZone">
+      <span></span>
+      <p>${state.shuffled ? "按住牌堆向左滑动切牌" : "完成洗牌后解锁切牌"}</p>
+    </div>
+    <div class="fan-zone ${state.cut ? "show" : ""}">
+      ${state.cut ? renderFan(state) : ""}
+    </div>
+  `;
+
+  bindRitual(container, state);
+}
+
+function renderFan(state) {
+  return state.order
+    .map((card, index) => {
+      const selected = state.selected.includes(card);
+      const disabled = state.selected.length >= state.pickCount && !selected;
+      return `
+        <button class="fan-card ${selected ? "selected" : ""}" type="button" data-index="${index}" ${disabled ? "disabled" : ""} style="animation-delay:${Math.min(index, 24) * 18}ms">
+          <span data-symbol="${card.symbol}" style="${cardInlineStyle(card)}"></span>
+          <strong>${selected ? card.name : ""}</strong>
+        </button>
+      `;
+    })
+    .join("");
+}
+
+function bindRitual(container, state) {
+  const board = container.querySelector(".ritual-board");
+  const circlePad = container.querySelector("[data-role='circlePad']");
+  const canvas = circlePad.querySelector("canvas");
+  const ctx = canvas.getContext("2d");
+  let drawing = false;
+  let points = [];
+
+  function pointFromEvent(event) {
+    const rect = canvas.getBoundingClientRect();
+    const touch = event.touches?.[0] || event.changedTouches?.[0] || event;
+    return {
+      x: ((touch.clientX - rect.left) / rect.width) * canvas.width,
+      y: ((touch.clientY - rect.top) / rect.height) * canvas.height
+    };
+  }
+
+  function drawLine(point) {
+    ctx.lineWidth = 5;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "#8f6d4f";
+    if (points.length === 1) {
+      ctx.beginPath();
+      ctx.moveTo(point.x, point.y);
+    } else {
+      ctx.lineTo(point.x, point.y);
+      ctx.stroke();
+    }
+  }
+
+  function testCircle() {
+    if (points.length < 18) return false;
+    const xs = points.map((point) => point.x);
+    const ys = points.map((point) => point.y);
+    const width = Math.max(...xs) - Math.min(...xs);
+    const height = Math.max(...ys) - Math.min(...ys);
+    const first = points[0];
+    const last = points[points.length - 1];
+    const close = Math.hypot(first.x - last.x, first.y - last.y) < 58;
+    const path = points.slice(1).reduce((sum, point, index) => sum + Math.hypot(point.x - points[index].x, point.y - points[index].y), 0);
+    return close && width > 80 && height > 60 && path > 280;
+  }
+
+  circlePad.addEventListener("pointerdown", (event) => {
+    if (state.circled) return;
+    drawing = true;
+    points = [];
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const point = pointFromEvent(event);
+    points.push(point);
+    drawLine(point);
+    circlePad.setPointerCapture(event.pointerId);
+  });
+
+  circlePad.addEventListener("pointermove", (event) => {
+    if (!drawing || state.circled) return;
+    event.preventDefault();
+    const point = pointFromEvent(event);
+    points.push(point);
+    drawLine(point);
+  });
+
+  circlePad.addEventListener("pointerup", () => {
+    if (!drawing || state.circled) return;
+    drawing = false;
+    if (testCircle()) {
+      state.circled = true;
+      renderRitual(container, state);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  });
+
+  container.querySelector("[data-role='shuffle']").addEventListener("click", () => {
+    if (!state.circled || state.shuffled) return;
+    state.shuffled = true;
+    state.order = shuffleDeck(state.order, `${state.type}-shuffle-${Date.now()}`);
+    board.classList.add("shuffling");
+    window.setTimeout(() => renderRitual(container, state), 760);
+  });
+
+  const cutZone = container.querySelector("[data-role='cutZone']");
+  cutZone.addEventListener("pointerdown", (event) => {
+    if (!state.shuffled || state.cut) return;
+    state.startX = event.clientX;
+    cutZone.setPointerCapture(event.pointerId);
+  });
+
+  cutZone.addEventListener("pointerup", (event) => {
+    if (!state.shuffled || state.cut) return;
+    if (event.clientX - state.startX < -52) {
+      const half = Math.floor(state.order.length / 2);
+      state.order = [...state.order.slice(half), ...state.order.slice(0, half)];
+      state.cut = true;
+      cutZone.classList.add("cutting");
+      window.setTimeout(() => renderRitual(container, state), 560);
+    }
+  });
+
+  container.querySelectorAll(".fan-card").forEach((button) => {
+    button.addEventListener("click", () => {
+      const card = state.order[Number(button.dataset.index)];
+      if (!card || state.selected.includes(card) || state.selected.length >= state.pickCount) return;
+      state.selected.push(card);
+      if (state.selected.length === state.pickCount) {
+        state.onComplete(state.selected);
+      }
+      renderRitual(container, state);
+    });
+  });
+}
+
+function readDailyTarot() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(dailyStorageKey) || "null");
+    if (!stored || stored.date !== todayKey()) return null;
+    const card = tarotCards.find((item) => item.id === stored.cardId);
+    return card ? { card, reversed: stored.reversed } : null;
+  } catch {
+    return null;
+  }
+}
+
+function revealDailyTarot(card, reversed, persist = true) {
   const tarotCard = $("#dailyTarotCard");
-  tarotCard.classList.remove("revealed");
+  tarotCard.classList.remove("revealed", "is-reversed");
 
   window.setTimeout(() => {
     setCardArt($("#tarotVisual"), card);
-    $("#tarotName").textContent = card.name;
+    tarotCard.classList.toggle("is-reversed", reversed);
+    $("#tarotName").textContent = `${card.name}${reversed ? " 逆位" : " 正位"}`;
     $("#tarotEn").textContent = card.en;
     $("#tarotQuote").textContent = `“${card.quote}”`;
-    $("#tarotMeaning").textContent = card.meaning;
+    $("#tarotSource").textContent = `文学灵感：${card.author} · ${card.book}`;
+    $("#tarotMeaning").textContent = reversed ? card.reversed : card.upright;
     $("#tarotKeywords").innerHTML = card.keywords.map((keyword) => `<span>${keyword}</span>`).join("");
     $("#tarotReading").classList.remove("hidden");
     tarotCard.classList.add("revealed");
@@ -221,28 +473,28 @@ function revealDailyTarot(card, persist = true) {
     button.disabled = true;
     button.querySelector("span:last-child").textContent = "今日牌面已显现";
     if (persist) {
-      localStorage.setItem(dailyStorageKey, JSON.stringify({ date: todayKey(), index: tarotCards.indexOf(card) }));
+      localStorage.setItem(dailyStorageKey, JSON.stringify({ date: todayKey(), cardId: card.id, reversed }));
     }
   }, 160);
 }
 
-function drawDailyTarot() {
+function startDailyTarot() {
   const stored = readDailyTarot();
   if (stored) {
-    revealDailyTarot(stored, false);
+    revealDailyTarot(stored.card, stored.reversed, false);
     return;
   }
-  revealDailyTarot(tarotCards[seededDailyIndex()]);
-}
-
-function readDailyTarot() {
-  try {
-    const stored = JSON.parse(localStorage.getItem(dailyStorageKey) || "null");
-    if (!stored || stored.date !== todayKey()) return null;
-    return tarotCards[stored.index] || null;
-  } catch {
-    return null;
-  }
+  $("#tarotReading").classList.add("hidden");
+  createRitual($("#tarotRitual"), {
+    type: "tarot",
+    label: "每日塔罗仪式",
+    deck: tarotCards,
+    pickCount: 1,
+    onComplete: ([card]) => {
+      const reversed = seededNumber(`${todayKey()}-${card.id}`) % 2 === 1;
+      revealDailyTarot(card, reversed);
+    }
+  });
 }
 
 function renderSpread(cards) {
@@ -253,7 +505,7 @@ function renderSpread(cards) {
       const position = spreadPositions[currentSpread][index];
       return `
         <article class="mini-card" style="animation-delay:${index * 70}ms">
-          <div class="mini-face" data-symbol="${card.symbol}" style="--art-a:${card.colors[0]};--art-b:${card.colors[1]}"></div>
+          <div class="mini-face" data-symbol="${card.symbol}" style="${cardInlineStyle(card)}"></div>
           <p>${position}</p>
           <strong>${card.name}</strong>
         </article>
@@ -269,23 +521,25 @@ function makeAiReading(cards) {
   const last = cards[cards.length - 1];
   const spreadName = currentSpread === 3 ? "过去、现在、未来" : "现实、潜意识、阻碍、目标、结果";
   $("#spreadTitle").textContent = spreadName;
-  return `这组牌以「${names}」展开，像一条很轻的线索：${first.name}带来${first.meaning}，让你看见事情最初的气息；${center.name}提醒你把注意力放在${center.meaning}上，不必急着把感受压成结论；${last.name}则把能量慢慢落向${last.meaning}。如果今天心里有疑问，可以先选择一个让身体放松的方向，答案会在更安静的时候变得柔和而清楚。`;
+  return `你亲手选出的牌是「${names}」。${first.name}像一封刚抵达的信，带着${first.meaning}；${center.name}让这组牌的心跳落在${center.meaning}上；${last.name}则把故事轻轻推向${last.meaning}。这不是一个僵硬的是或否，更像一盏低亮度的灯：请先照见你真正牵挂的地方，再选择让身体更放松、让心更诚实的那一步。`;
 }
 
-function shuffleLenormand() {
-  const deck = $("#deckStack");
-  deck.classList.add("shuffling");
+function startLenormand() {
   $("#lenormandResult").classList.add("hidden");
   $("#spreadGrid").innerHTML = "";
-  window.setTimeout(() => {
-    const cards = pickRandom(lenormandCards, currentSpread);
-    renderSpread(cards);
-    $("#aiReading").textContent = makeAiReading(cards);
-    $("#lenormandResult").classList.remove("hidden");
-    currentRating = 0;
-    paintStars();
-    deck.classList.remove("shuffling");
-  }, 640);
+  createRitual($("#lenormandRitual"), {
+    type: "lenormand",
+    label: `${currentSpread} 张雷诺曼牌阵`,
+    deck: lenormandCards,
+    pickCount: currentSpread,
+    onComplete: (cards) => {
+      renderSpread(cards);
+      $("#aiReading").textContent = makeAiReading(cards);
+      $("#lenormandResult").classList.remove("hidden");
+      currentRating = 0;
+      paintStars();
+    }
+  });
 }
 
 function paintStars() {
@@ -368,8 +622,8 @@ function switchScreen(target) {
 }
 
 function bindEvents() {
-  $("#drawTarotBtn").addEventListener("click", drawDailyTarot);
-  $("#shuffleBtn").addEventListener("click", shuffleLenormand);
+  $("#drawTarotBtn").addEventListener("click", startDailyTarot);
+  $("#startLenormandBtn").addEventListener("click", startLenormand);
   $("#meditationToggle").addEventListener("click", toggleMeditation);
 
   $$(".bottom-nav button").forEach((button) => {
@@ -380,7 +634,7 @@ function bindEvents() {
     button.addEventListener("click", () => {
       currentSpread = Number(button.dataset.spread);
       $$(".segmented button").forEach((item) => item.classList.toggle("active", item === button));
-      shuffleLenormand();
+      startLenormand();
     });
   });
 
@@ -398,8 +652,9 @@ function init() {
   updateTimer();
   paintStars();
   const dailyCard = readDailyTarot();
-  if (dailyCard) revealDailyTarot(dailyCard, false);
-  shuffleLenormand();
+  if (dailyCard) revealDailyTarot(dailyCard.card, dailyCard.reversed, false);
+  startLenormand();
+  console.info(`Tarot cards: ${tarotCards.length}; Lenormand cards: ${lenormandCards.length}`);
 }
 
 init();
